@@ -15,11 +15,7 @@ function App() {
   );
 }
 
-const Home = () => (
-  <div>
-    <img className="w-full" src="https://i.ibb.co/D5jhmhP/15647372361866-01.jpg" alt="" />
-  </div>
-);
-const About = () => <div>About Page</div>;
+const Home = () => <div></div>;
+const About = () => <div></div>;
 
 export default App;
