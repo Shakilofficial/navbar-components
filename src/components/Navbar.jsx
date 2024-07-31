@@ -22,7 +22,7 @@ const Navbar = () => {
           {/* Centered Nav Items */}
           <div className="flex-1 flex items-center justify-center sm:justify-center">
             <div className="hidden sm:block">
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 font-medium text-lg">
                 <NavItem to="/" label="Home" />
                 <NavItem to="/about" label="About" />
               </div>
