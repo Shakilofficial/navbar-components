@@ -21,7 +21,10 @@ const UseModal = () => {
           This is a reusable modal component with a beautiful design, using
           Tailwind CSS and Framer Motion.
         </p>
-        <button className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-lg shadow-md hover:from-orange-500 hover:to-yellow-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75">
+        <button
+          onClick={closeModal}
+          className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-lg shadow-md hover:from-orange-500 hover:to-yellow-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75"
+        >
           Close Modal
         </button>
       </Modal>
