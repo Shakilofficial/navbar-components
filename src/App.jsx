@@ -1,5 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AnimatedCard from "./components/AnimatedCard";
+import Container from "./components/Container";
+import Header from "./components/Header";
 import Navbar from "./components/Navbar";
+import UseModal from "./components/UseModal";
 
 function App() {
   return (
@@ -15,7 +19,26 @@ function App() {
   );
 }
 
-const Home = () => <div></div>;
-const About = () => <div></div>;
+const Home = () => (
+  <div>
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <AnimatedCard>
+        <h2 className="text-2xl font-bold mb-2">Card Title</h2>
+        <p className="text-base">
+          This is a reusable card component with a gradient background, using
+          Tailwind CSS and Framer Motion.
+        </p>
+      </AnimatedCard>
+    </div>
+  </div>
+);
+const About = () => (
+  <div>
+    <Container>
+      <Header title="My Application" subtitle="Welcome to the app" />
+      <UseModal />
+    </Container>
+  </div>
+);
 
 export default App;

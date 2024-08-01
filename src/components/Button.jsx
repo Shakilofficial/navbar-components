@@ -1,66 +1,62 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Button = ({ children, onClick, className, disabled }) => {
-  const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-        ease: "easeOut",
-      },
-    },
-    tap: {
-      scale: 0.95,
-      transition: {
-        duration: 0.1,
-        ease: "easeIn",
-      },
-    },
-  };
+const rippleEffect = {
+  initial: { scale: 0, opacity: 1 },
+  animate: { scale: 4, opacity: 0 },
+  transition: { duration: 0.6 },
+};
 
-  const rippleVariants = {
-    initial: {
-      opacity: 0,
-      scale: 0,
-    },
-    animate: {
-      opacity: 0.2,
-      scale: 1.5,
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-      },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    },
+const Button = ({ children, to }) => {
+  const [rippleArray, setRippleArray] = React.useState([]);
+
+  const addRipple = (event) => {
+    const rippleContainer = event.currentTarget.getBoundingClientRect();
+    const size =
+      rippleContainer.width > rippleContainer.height
+        ? rippleContainer.width
+        : rippleContainer.height;
+    const x = event.clientX - rippleContainer.left - size / 2;
+    const y = event.clientY - rippleContainer.top - size / 2;
+    const newRipple = { x, y, size };
+
+    setRippleArray([...rippleArray, newRipple]);
+
+    setTimeout(() => {
+      setRippleArray(rippleArray.slice(1));
+    }, 600);
   };
 
   return (
-    <motion.button
-      whileHover={!disabled ? "hover" : ""}
-      whileTap={!disabled ? "tap" : ""}
-      className={`bg-gradient-to-r from-ffc55a to-fc4100 text-white font-bold py-2 px-4 rounded-full ${className} ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      }`}
-      onClick={onClick}
-      disabled={disabled}
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      className="relative overflow-hidden rounded-lg"
     >
-      {children}
-      <motion.span
-        className="absolute inset-0 rounded-full"
-        initial="initial"
-        animate={!disabled ? "animate" : ""}
-        exit="exit"
-        variants={rippleVariants}
-      />
-    </motion.button>
+      <Link
+        to={to}
+        onMouseDown={addRipple}
+        className="relative flex items-center justify-center px-5 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold rounded-lg shadow-md hover:from-orange-500 hover:to-yellow-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75"
+      >
+        {rippleArray.map((ripple, index) => (
+          <motion.span
+            key={index}
+            className="absolute bg-white rounded-full"
+            style={{
+              top: ripple.y,
+              left: ripple.x,
+              width: ripple.size,
+              height: ripple.size,
+            }}
+            initial="initial"
+            animate="animate"
+            variants={rippleEffect}
+          />
+        ))}
+        {children}
+      </Link>
+    </motion.div>
   );
 };
 
